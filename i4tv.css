@@ -1,0 +1,22 @@
+.panel { padding: .3em; position: absolute; left: 2; top: 10; z-index: 16000; -webkit-box-shadow: 1px 1px 10px #00f;}
+.options { margin: 0; padding: 0; list-style-type: none; }
+.options li { float: left; padding: 0.2em; }
+.illuminate {
+    -webkit-border-radius: 5px;
+}
+.button {
+    display: inline-block;
+    text-align: center;
+    font: 14px/100% Arial, Helvetica, sans-serif;
+    margin: 5px;
+    padding: 5px;
+    text-shadow: 0 1px 1px rgba(0,0,0,.3);
+    -webkit-border-radius: 5px; 
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background: light;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+}
+
