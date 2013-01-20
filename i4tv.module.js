@@ -7,10 +7,28 @@
 (function (window, document) {
 
     var version = '0.0.1',
-        inputEngine = 'ws://www.i4tv.org:1990/',
+
+    inputEngine = 'ws://www.i4tv.cn:8088/websocket/',
+
+    strokeInput = {
+        "1": 'h',
+        "2": 's',
+        "3": 'p',
+        "4": 'n',
+        "5": 'z',
+        "0 1": 'h'
+    },
+
+    /**
+     * table of keypad and process function when the keypad being pressed.
+     */
+    keypadsDictionary = {};
+
+    function inputInit(inputmethod) {
+    }
 
     i4TV = {
-        i4TV = function (className) {
+        i4TV : function (className) {
             var inputs = document.getElementsByClassName (className);
                 panel = document.createElement ('div');
                 panel.setAttribute ('id', 'panel');
@@ -27,7 +45,7 @@
                 panel.appendChild (word);
                 word.innerHTML = '.';
 
-                websocket = new WebSocket ("ws://www.i4tv.cn:8088/websocket/");
+                websocket = new WebSocket(inputEngine); 
                 websocket.onmessage = function (evt) {
                     var candidat = '';
                     for (i=0; i<evt.data.length; i++) {
@@ -72,7 +90,11 @@
             }, false);
 
             return {
-                chineseInput: function () {
+                chineseInput: function (inputmethod) {
+                    // initialize input panel
+                    inputInit(inputmethod);
+
+                    // bind event.
                     for (var i=0; i<inputs.length; i++) {
                         inputs[i].onfocus = function () {
                             //panel.style.position.left = inputs[i].offsetLeft;
@@ -87,7 +109,7 @@
         }
     }
 
-     Expose i4tv functions to global
+    // Expose i4tv functions to global
     for (var fn in i4TV) {
         window[fn] = i4TV[fn];
     }
