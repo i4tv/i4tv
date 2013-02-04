@@ -10,21 +10,55 @@
 
     inputEngine = 'ws://www.i4tv.cn:8088/websocket/',
 
-    strokeInput = {
-        "1": 'h',
-        "2": 's',
-        "3": 'p',
-        "4": 'n',
-        "5": 'z',
-        "0 1": 'h'
-    },
+    chineseInput = {
+        /**
+         * table of keypad and process function when the keypad being pressed.
+         */
+        keypadsDictionary : {},
 
-    /**
-     * table of keypad and process function when the keypad being pressed.
-     */
-    keypadsDictionary = {};
+        /**
+         * stroke input.
+         */
+        stroke : {
+            /**
+             * input sequences, for example: 1121 -> hhsh -> 一一丨一.
+             */
+            inputseq: "",
+            strokekeypads: {
+                "1": 'h',
+                "2": 's',
+                "3": 'p',
+                "4": 'n',
+                "5": 'z',
+                "0 1": 37, // left arrow
+                "0 2": 39, // right arrow
+                "0 3": 46, // delete
+                "0 4": 8, // backspace
+                "0 5": 9, // Tab, input method switch.
+                "0 6": 13, // Enter, ok, complete.
+                "0 7": 36 // home, Help
+            }
+        },
+
+        /**
+         * chinese pin yin input.
+         */
+        pinyin : {
+            inputseq: "",
+            pinyinkeypads: {
+            }
+        }
+    }
 
     function inputInit(inputmethod) {
+        var keypads = chineseInput[inputmethod]["strokekeypads"],
+        keypadsDictionary = {};
+
+        for (name in keypads) {
+            keypadsDictionary[name] = keypads[name];
+        }
+
+        chineseInput['keypadsDictionary'] = keypadsDictionary;
     }
 
     i4TV = {
@@ -59,6 +93,7 @@
             window.addEventListener ('keypress', function (event) {
                 e = window.event || event;
                 e = e.charCode || e.keyCode;
+                alert(e);
                 switch (e) {
                 case 49:
                     stroke.value = stroke.value + '一';
@@ -104,6 +139,9 @@
                             panel.style.display = 'none';
                         }
                     }
+                },
+                dict : function() {
+                    return chineseInput['keypadsDictionary'];
                 }
             }
         }
