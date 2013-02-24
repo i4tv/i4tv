@@ -24,7 +24,7 @@
              * input sequences, for example: 1121 -> hhsh -> 一一丨一.
              */
             inputseq: "",
-            strokekeypads: {
+            keypads: {
                 "1": 'h',
                 "2": 's',
                 "3": 'p',
@@ -45,20 +45,23 @@
          */
         pinyin : {
             inputseq: "",
-            pinyinkeypads: {
+            keypads: {
             }
         }
     }
 
-    function inputInit(inputmethod) {
-        var keypads = chineseInput[inputmethod]["strokekeypads"],
-        keypadsDictionary = {};
+    function handleKey(e) {
+
+    }
+
+    function inputSetup(inputmethod) {
+        var keypads = chineseInput[inputmethod]["keypads"];
 
         for (name in keypads) {
-            keypadsDictionary[name] = keypads[name];
+            //keypadsDictionary[name] = keypads[name];
         }
 
-        chineseInput['keypadsDictionary'] = keypadsDictionary;
+        //chineseInput['keypadsDictionary'] = keypadsDictionary;
     }
 
     i4TV = {
@@ -91,10 +94,9 @@
                 strokestr = '';
 
             window.addEventListener ('keypress', function (event) {
-                e = window.event || event;
-                e = e.charCode || e.keyCode;
-                alert(e);
-                switch (e) {
+                //e = window.event || event;
+                //e = e.charCode || e.keyCode;
+                switch (event.which) {
                 case 49:
                     stroke.value = stroke.value + '一';
                     strokestr += 'h';
@@ -127,7 +129,7 @@
             return {
                 chineseInput: function (inputmethod) {
                     // initialize input panel
-                    inputInit(inputmethod);
+                    inputSetup(inputmethod);
 
                     // bind event.
                     for (var i=0; i<inputs.length; i++) {
