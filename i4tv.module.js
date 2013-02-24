@@ -64,97 +64,91 @@
         //chineseInput['keypadsDictionary'] = keypadsDictionary;
     }
 
-    i4TV = {
-        i4TV : function (className) {
-            var inputs = document.getElementsByClassName (className);
-                panel = document.createElement ('div');
-                panel.setAttribute ('id', 'panel');
-                panel.setAttribute ('class', 'panel');
-                panel.style.position = 'absolute';
-                panel.style.display = 'none';
-                document.body.appendChild (panel);
-                stroke = document.createElement ('input')
-                panel.appendChild (stroke);
-                illuminate = document.createElement ('div');
-                illuminate.innerHTML = '<div class="button light">1. 一</div><div class="button">2. 丨</div> 3. 丿 4. 丶 5. 乛';
-                panel.appendChild (illuminate);
-                word = document.createElement ('div');
-                panel.appendChild (word);
-                word.innerHTML = '.';
+    var i4TV = function (className) {
+        var inputs = document.getElementsByClassName (className);
+            panel = document.createElement ('div');
+            panel.setAttribute ('id', 'panel');
+            panel.setAttribute ('class', 'panel');
+            panel.style.position = 'absolute';
+            panel.style.display = 'none';
+            document.body.appendChild (panel);
+            stroke = document.createElement ('input')
+            panel.appendChild (stroke);
+            illuminate = document.createElement ('div');
+            illuminate.innerHTML = '<div class="button light">1. 一</div><div class="button">2. 丨</div> 3. 丿 4. 丶 5. 乛';
+            panel.appendChild (illuminate);
+            word = document.createElement ('div');
+            panel.appendChild (word);
+            word.innerHTML = '.';
 
-                websocket = new WebSocket(inputEngine); 
-                websocket.onmessage = function (evt) {
-                    var candidat = '';
-                    for (i=0; i<evt.data.length; i++) {
-                        candidat += '6' + i + '.' + evt.data[i] + ' ';
-                    }
-                    word.innerHTML = candidat;
-                };
-
-                strokestr = '';
-
-            window.addEventListener ('keypress', function (event) {
-                //e = window.event || event;
-                //e = e.charCode || e.keyCode;
-                switch (event.which) {
-                case 49:
-                    stroke.value = stroke.value + '一';
-                    strokestr += 'h';
-                    websocket.send (strokestr);
-                    break;
-                case 50:
-                    stroke.value = stroke.value + '丨';
-                    strokestr += 's';
-                    websocket.send (strokestr);
-                    break;
-                case 51:
-                    stroke.value = stroke.value + '丿';
-                    strokestr += 'p';
-                    websocket.send (strokestr);
-                    break;
-                case 52:
-                    stroke.value = stroke.value + '丶';
-                    strokestr += 'n';
-                    websocket.send (strokestr);
-                    break;
-                case 53:
-                    stroke.value = stroke.value + '乛';
-                    strokestr += 'z';
-                    websocket.send (strokestr);
-                    break;
-                default:
+            websocket = new WebSocket(inputEngine); 
+            websocket.onmessage = function (evt) {
+                var candidat = '';
+                for (i=0; i<evt.data.length; i++) {
+                    candidat += '6' + i + '.' + evt.data[i] + ' ';
                 }
-            }, false);
+                word.innerHTML = candidat;
+            };
 
-            return {
-                chineseInput: function (inputmethod) {
-                    // initialize input panel
-                    inputSetup(inputmethod);
+            strokestr = '';
 
-                    // bind event.
-                    for (var i=0; i<inputs.length; i++) {
-                        inputs[i].onfocus = function () {
-                            //panel.style.position.left = inputs[i].offsetLeft;
-                            panel.style.display = 'block';
-                        }
-                        inputs[i].onblur = function () {
-                            panel.style.display = 'none';
-                        }
+        window.addEventListener ('keypress', function (event) {
+            //e = window.event || event;
+            //e = e.charCode || e.keyCode;
+            switch (event.which) {
+            case 49:
+                stroke.value = stroke.value + '一';
+                strokestr += 'h';
+                websocket.send (strokestr);
+                break;
+            case 50:
+                stroke.value = stroke.value + '丨';
+                strokestr += 's';
+                websocket.send (strokestr);
+                break;
+            case 51:
+                stroke.value = stroke.value + '丿';
+                strokestr += 'p';
+                websocket.send (strokestr);
+                break;
+            case 52:
+                stroke.value = stroke.value + '丶';
+                strokestr += 'n';
+                websocket.send (strokestr);
+                break;
+            case 53:
+                stroke.value = stroke.value + '乛';
+                strokestr += 'z';
+                websocket.send (strokestr);
+                break;
+            default:
+            }
+        }, false);
+
+        return {
+            chineseInput: function (inputmethod) {
+                // initialize input panel
+                inputSetup(inputmethod);
+
+                // bind event.
+                for (var i=0; i<inputs.length; i++) {
+                    inputs[i].onfocus = function () {
+                        //panel.style.position.left = inputs[i].offsetLeft;
+                        panel.style.display = 'block';
                     }
-                },
-                dict : function() {
-                    return chineseInput['keypadsDictionary'];
+                    inputs[i].onblur = function () {
+                        panel.style.display = 'none';
+                    }
                 }
+            },
+            dict : function() {
+                return chineseInput['keypadsDictionary'];
             }
         }
     }
 
     // Expose i4tv functions to global
-    for (var fn in i4TV) {
-        window[fn] = i4TV[fn];
-    }
-
     i4TV.version = version;
-    //window.i4TV = i4TV;
+    window.i4TV = i4TV;
 
 })(window, document);
