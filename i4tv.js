@@ -24,13 +24,15 @@
     /*
         instruction set, i4TV
         key: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
-        index: index of the key in opcode.
+        length: length of the opcode.
         opcode: for example: 01, 02.
         instruction: corresponding action.
     */
     var instructionSet = {},
 
         currentIndex = {};
+
+        currentOpcodeLength = 0;
 
     function addOpcode (opcode, instruction) {
 
@@ -50,16 +52,62 @@
                 instructionSet[key] = [];
             }
             if (i == keys.length-1) {
-                record = {key: key, index: i, opcode: opcode, instruction: instruction};
+                record = {
+                    key: key,
+                    length: keys.length,
+                    opcode: opcode,
+                    instruction: instruction
+                };
             } else {
-                record = {key: key, index: i, opcode: opcode, instruction: increaseIndex};
+                record = {
+                    key: key,
+                    length: keys.length,
+                    opcode: opcode,
+                    instruction: increaseIndex
+                };
             }
             instructionSet[key].push (record);
         }
     }
 
+    function reset () {
+        for (opcode in currentIndex)
+            currentIndex[opcode] = 0;
+        currentOpcodeLength = 0;
+    }
+
+    function getMatchInstructions (key) {
+        var matches = [];
+
+        if (!instructionSet[key]) {
+            return [];
+        }
+        for (i = 0; i < instructionSet[key].length; i++) {
+            instruction = instructionSet[key][i];
+            if (currentIndex[instruction.opcode] > instruction.length) {
+                continue;
+            }
+            if (currentOpcodeLength >= instruction.length) {
+                continue;
+            }
+            matches.push (instruction);
+        }
+        if (matches.length > 0)
+            currentOpcodeLength++;
+        return matches;
+    }
+
     function keyHandle (e) {
-        alert(e.which);
+        key = String.fromCharCode (e.which);
+        instructions = getMatchInstructions (key);
+        for (i = 0; i < instructions.length; i++) {
+            currentIndex[instructions[i].opcode]++;
+            if (currentIndex[instructions[i].opcode] == instructions[i].length) {
+                alert (instructions[i].instruction);
+                reset ();
+                break;
+            }
+        }
     }
 
     window.addEventListener ('keypress', keyHandle);
@@ -77,7 +125,7 @@
             },
 
             display: function () {
-                return instructionSet;
+                return [instructionSet, currentIndex];
             }
         }
     }
