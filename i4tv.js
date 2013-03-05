@@ -24,15 +24,18 @@
     /*
         instruction set, i4TV
         key: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+        index: key index in the opcode.
         length: length of the opcode.
         opcode: for example: 01, 02.
         instruction: corresponding action.
     */
     var instructionSet = {},
 
-        currentIndex = {};
+        currentIndex = {},
 
-        currentOpcodeLength = 0;
+        currentOpcodeLength = 0,
+
+        timerReset;
 
     function addOpcode (opcode, instruction) {
 
@@ -40,10 +43,13 @@
         keys = opcode.split(' ');
 
         var increaseIndex = function (key) {
+                //console.log ('opcode is ' + opcode);
                 ++currentIndex[opcode];
+                resetTimer ();
             },
 
             executeInstruction = function (key) {
+                alert ('execute ' + key);
             };
 
         for (i=0; i<keys.length; i++) {
@@ -54,13 +60,15 @@
             if (i == keys.length-1) {
                 record = {
                     key: key,
+                    index: i,
                     length: keys.length,
                     opcode: opcode,
-                    instruction: instruction
+                    instruction: executeInstruction
                 };
             } else {
                 record = {
                     key: key,
+                    index: i,
                     length: keys.length,
                     opcode: opcode,
                     instruction: increaseIndex
@@ -76,6 +84,11 @@
         currentOpcodeLength = 0;
     }
 
+    function resetTimer () {
+        clearTimeout (timerReset);
+        timerReset = setTimeout (reset, 10000);
+    }
+
     function getMatchInstructions (key) {
         var matches = [];
 
@@ -87,10 +100,10 @@
             if (currentIndex[instruction.opcode] > instruction.length) {
                 continue;
             }
-            if (currentOpcodeLength >= instruction.length) {
-                continue;
+            //console.log (currentOpcodeLength + ' : ' + instruction.length + ' : ' + instruction.opcode + ' : ' + instruction.index);
+            if (currentOpcodeLength == instruction.index) {
+                matches.push (instruction);
             }
-            matches.push (instruction);
         }
         if (matches.length > 0)
             currentOpcodeLength++;
@@ -101,9 +114,9 @@
         key = String.fromCharCode (e.which);
         instructions = getMatchInstructions (key);
         for (i = 0; i < instructions.length; i++) {
-            currentIndex[instructions[i].opcode]++;
-            if (currentIndex[instructions[i].opcode] == instructions[i].length) {
-                alert (instructions[i].instruction);
+            //console.log ('handle' + currentIndex[instructions[i].opcode] + ' : ' + instructions[i].length);
+            instructions[i].instruction (key);
+            if (currentOpcodeLength == instructions[i].length) {
                 reset ();
                 break;
             }
