@@ -6,6 +6,9 @@
 
 (function () {
 
+    /*
+        chinese stroke input method.
+    */
     strokeInstructionSet = {
         "1": 'h',
         "2": 's',
@@ -19,6 +22,13 @@
         "0 5": 9, // Tab, input method switch.
         "0 6": 13, // Enter, ok, complete.
         "0 7": 36 // home, Help
+    }
+
+    /*
+        opcode be pressed, means virtual key press.
+    */
+    function strokeKeypress (key) {
+        console.log (key);
     }
 
     /*
@@ -37,7 +47,12 @@
 
         timerReset;
 
-    function addOpcode (opcode, instruction) {
+    /*
+        opcode: code.
+        instruction: keyprocess function.
+        select: select the hanzi.
+    */
+    function addOpcode (opcode, virtualkey, instruction, select) {
 
         currentIndex[opcode] = 0;
         keys = opcode.split(' ');
@@ -48,8 +63,8 @@
                 resetTimer ();
             },
 
-            executeInstruction = function (key) {
-                alert ('execute ' + key);
+            executeInstruction = function () {
+                instruction (virtualkey);
             };
 
         for (i=0; i<keys.length; i++) {
@@ -78,6 +93,9 @@
         }
     }
 
+    /*
+        reset to origin status, cancel timeout keypress.
+    */
     function reset () {
         for (opcode in currentIndex)
             currentIndex[opcode] = 0;
@@ -86,9 +104,12 @@
 
     function resetTimer () {
         clearTimeout (timerReset);
-        timerReset = setTimeout (reset, 10000);
+        timerReset = setTimeout (reset, 1000);
     }
 
+    /*
+        keypress, find matches.
+    */
     function getMatchInstructions (key) {
         var matches = [];
 
@@ -110,6 +131,9 @@
         return matches;
     }
 
+    /*
+        keypress handler.
+    */
     function keyHandle (e) {
         key = String.fromCharCode (e.which);
         instructions = getMatchInstructions (key);
@@ -130,10 +154,9 @@
             chineseInput: function (inputmethod) {
                 if (inputmethod === 'stroke') {
                     set = strokeInstructionSet;
-                }
-
-                for (opcode in set) {
-                    addOpcode (opcode, set[opcode]);
+                    for (opcode in set) {
+                        addOpcode (opcode, set[opcode], strokeKeypress);
+                    }
                 }
             },
 
