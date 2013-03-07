@@ -52,7 +52,7 @@
         instruction: keyprocess function.
         select: select the hanzi.
     */
-    function addOpcode (opcode, virtualkey, instruction, select) {
+    function addOpcode (opcode, virtualkey, instruction) {
 
         currentIndex[opcode] = 0;
         keys = opcode.split(' ');
