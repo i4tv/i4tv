@@ -32,6 +32,26 @@
     }
 
     /*
+        stroke input panel.
+    */
+    function strokePanel (element) {
+        panel = document.createElement ('div');
+        panel.setAttribute ('id', 'panel');
+        panel.setAttribute ('class', 'panel');
+        panel.style.position = 'absolute';
+        //panel.style.display = 'none';
+        document.body.appendChild (panel);
+        stroke = document.createElement ('input')
+        panel.appendChild (stroke);
+        illuminate = document.createElement ('div');
+        illuminate.innerHTML = '<div class="button light">1. 一</div><div class="button">2. 丨</div> 3. 丿 4. 丶 5. 乛';
+        panel.appendChild (illuminate);
+        word = document.createElement ('div');
+        panel.appendChild (word);
+        word.innerHTML = '.';
+    }
+
+    /*
         instruction set, i4TV
         key: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
         index: key index in the opcode.
@@ -150,12 +170,29 @@
     window.addEventListener ('keypress', keyHandle);
 
     var i4TV = function (className) {
+
         return {
             chineseInput: function (inputmethod) {
+
+                inputs = document.getElementsByClassName (className);
+
                 if (inputmethod === 'stroke') {
                     set = strokeInstructionSet;
                     for (opcode in set) {
                         addOpcode (opcode, set[opcode], strokeKeypress);
+                    }
+                }
+
+                // bind event.
+                for (i = 0; i < inputs.length; i++) {
+                    inputs[i].onfocus = function () {
+                        //panel.style.position.left = inputs[i].offsetLeft;
+                        strokePanel (inputs[i]);
+                        //panel.style.display = 'block';
+                    }
+                    inputs[i].onblur = function () {
+                        //panel.style.display = 'none';
+                        document.body.removeChild (panel);
                     }
                 }
             },
