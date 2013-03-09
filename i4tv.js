@@ -177,9 +177,8 @@
                 inputs = document.getElementsByClassName (className);
 
                 if (inputmethod === 'stroke') {
-                    set = strokeInstructionSet;
-                    for (opcode in set) {
-                        addOpcode (opcode, set[opcode], strokeKeypress);
+                    for (opcode in strokeInstructionSet) {
+                        addOpcode (opcode, strokeInstructionSet[opcode], strokeKeypress);
                     }
                 }
 
