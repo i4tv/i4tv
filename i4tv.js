@@ -176,15 +176,19 @@
 
                 inputs = document.getElementsByClassName (className);
 
-                if (inputmethod === 'stroke') {
-                    for (opcode in strokeInstructionSet) {
-                        addOpcode (opcode, strokeInstructionSet[opcode], strokeKeypress);
-                    }
-                }
-
                 // bind event.
                 for (i = 0; i < inputs.length; i++) {
+                    /*
+                        callback to initialize instruction panel and initialize instruction table.
+                    */
                     inputs[i].onfocus = function () {
+
+                        if (inputmethod === 'stroke') {
+                            for (opcode in strokeInstructionSet) {
+                                addOpcode (opcode, strokeInstructionSet[opcode], strokeKeypress);
+                            }
+                        }
+
                         //panel.style.position.left = inputs[i].offsetLeft;
                         strokePanel (inputs[i]);
                         //panel.style.display = 'block';
