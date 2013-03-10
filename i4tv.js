@@ -60,8 +60,10 @@
           selectbox      panel
     */ 
     function strokePanel (element, instructionset) {
+        // prevent from add inputbox more than one.
         if (document.getElementById ('inputbox'))
                  return;
+
         var inputbox = document.createElement ('div'),
             selectbox = document.createElement ('div'),
             panel = document.createElement ('div'),
