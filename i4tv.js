@@ -174,6 +174,8 @@
                 break;
             }
         }
+
+        e.preventDefault ();
     }
 
     window.addEventListener ('keypress', keyHandle);
