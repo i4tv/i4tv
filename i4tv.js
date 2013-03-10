@@ -34,7 +34,7 @@
     /*
         stroke input panel.
     */
-    function strokePanel (element) {
+    function strokePanel (element, instructionset) {
         var panel = document.createElement ('div'),
             selectbox = document.createElement ('div'),
             right = document.createElement ('div'),
@@ -48,10 +48,15 @@
         panel.setAttribute ('id', 'panel');
         panel.setAttribute ('class', 'panel');
         selectbox.innerHTML = 'selectbox';
+        selectbox.setAttribute ('class', 'selectbox');
         strokebox.appendChild (strokeInput);
-        buttons.innerHTML = '<ul>' +
-                               '<li class="key">1</li>' +
-                            '</ul>';
+        buttons.setAttribute ('class', 'buttons');
+        buttonsHTML = '<ul>';
+        for (var opcode in instructionset) {
+            buttonsHTML += '<li class="key">' + instructionset[opcode] + '<hr>' + opcode + '</li>'
+        }
+        buttonsHTML += '</ul>';
+        buttons.innerHTML = buttonsHTML;
         document.body.appendChild (panel);
     }
 
@@ -195,7 +200,7 @@
                         }
 
                         //panel.style.position.left = inputs[i].offsetLeft;
-                        strokePanel (inputs[i]);
+                        strokePanel (inputs[i], strokeInstructionSet);
                         //panel.style.display = 'block';
                     }
                     inputs[i].onblur = function () {
