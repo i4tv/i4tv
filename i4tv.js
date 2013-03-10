@@ -28,12 +28,27 @@
         opcode be pressed, means virtual key press.
     */
     function strokeKeypress (key) {
+        var strokebox = document.getElementById ('strokebox');
+        strokebox.value += key;
         console.log (key);
     }
 
     /*
-        stroke input box.
-    */
+        stroke inputbox.
+        +-----------+---------------+
+        |           |   strokebox   |
+        |           | +-----------+ |
+        |           | |strokeinput| |
+        |           | +-----------+ |
+        |           +---------------+
+        |           |               |
+        |           |               |
+        |           |    buttons    |
+        |           |               |
+        |           |               |
+        +-----------+---------------+
+          selectbox      panel
+    */ 
     function strokePanel (element, instructionset) {
         var inputbox = document.createElement ('div'),
             selectbox = document.createElement ('div'),
@@ -49,6 +64,7 @@
         inputbox.setAttribute ('class', 'inputbox');
         selectbox.innerHTML = 'selectbox';
         selectbox.setAttribute ('class', 'selectbox');
+        strokeInput.setAttribute ('id', 'strokebox');
         strokebox.appendChild (strokeInput);
         buttons.setAttribute ('class', 'buttons');
         buttonsHTML = '<ul>';
