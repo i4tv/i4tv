@@ -9,7 +9,7 @@
     /*
         chinese stroke input method.
     */
-    strokeInstructionSet = {
+    var strokeInstructionSet = {
         "1": 'h',
         "2": 's',
         "3": 'p',
@@ -22,7 +22,16 @@
         "0 5": 9, // Tab, input method switch.
         "0 6": 13, // Enter, ok, complete.
         "0 7": 36 // home, Help
-    }
+    },
+
+    strokeEngine = new WebSocket('ws://www.i4tv.cn:8088/websocket/');
+    strokeEngine.onmessage = function (evt) {
+        var candidat = '';
+        for (i=0; i<evt.data.length; i++) {
+            candidat += '6' + i + '.' + evt.data[i] + ' ';
+        }
+        console.log (candidat);
+    };
 
     /*
         opcode be pressed, means virtual key press.
@@ -31,6 +40,7 @@
         var strokebox = document.getElementById ('strokebox');
         strokebox.value += key;
         console.log (key);
+        strokeEngine.send (strokebox.value);
     }
 
     /*
