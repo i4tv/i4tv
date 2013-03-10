@@ -199,12 +199,9 @@
                             }
                         }
 
-                        //panel.style.position.left = inputs[i].offsetLeft;
                         strokePanel (inputs[i], strokeInstructionSet);
-                        //panel.style.display = 'block';
                     }
                     inputs[i].onblur = function () {
-                        //panel.style.display = 'none';
                         document.body.removeChild (inputbox);
                     }
                 }
