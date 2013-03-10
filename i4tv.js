@@ -35,20 +35,24 @@
         stroke input panel.
     */
     function strokePanel (element) {
-        panel = document.createElement ('div');
+        var panel = document.createElement ('div'),
+            selectbox = document.createElement ('div'),
+            right = document.createElement ('div'),
+            strokebox = document.createElement ('div'),
+            buttons = document.createElement ('div'),
+            strokeInput = document.createElement ('input');
+        panel.appendChild (selectbox);
+        panel.appendChild (right);
+        right.appendChild (strokebox);
+        right.appendChild (buttons);
         panel.setAttribute ('id', 'panel');
         panel.setAttribute ('class', 'panel');
-        panel.style.position = 'absolute';
-        //panel.style.display = 'none';
+        selectbox.innerHTML = 'selectbox';
+        strokebox.appendChild (strokeInput);
+        buttons.innerHTML = '<ul>' +
+                               '<li class="key">1</li>' +
+                            '</ul>';
         document.body.appendChild (panel);
-        stroke = document.createElement ('input')
-        panel.appendChild (stroke);
-        illuminate = document.createElement ('div');
-        illuminate.innerHTML = '<div class="button light">1. 一</div><div class="button">2. 丨</div> 3. 丿 4. 丶 5. 乛';
-        panel.appendChild (illuminate);
-        word = document.createElement ('div');
-        panel.appendChild (word);
-        word.innerHTML = '.';
     }
 
     /*
@@ -180,6 +184,7 @@
                 for (i = 0; i < inputs.length; i++) {
                     /*
                         callback to initialize instruction panel and initialize instruction table.
+                        initialization of instruction table take instruction panel as para.
                     */
                     inputs[i].onfocus = function () {
 
