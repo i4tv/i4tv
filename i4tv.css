@@ -1,4 +1,4 @@
-.panel {
+.inputbox {
     background:	#d5d9dc;
     padding: .3em;
     position: absolute;
@@ -13,7 +13,7 @@
     display: table;
 }
 
-.panel > div {
+.inputbox > div {
     display: table-cell;
 }
 

@@ -32,21 +32,21 @@
     }
 
     /*
-        stroke input panel.
+        stroke input box.
     */
     function strokePanel (element, instructionset) {
-        var panel = document.createElement ('div'),
+        var inputbox = document.createElement ('div'),
             selectbox = document.createElement ('div'),
-            right = document.createElement ('div'),
+            panel = document.createElement ('div'),
             strokebox = document.createElement ('div'),
             buttons = document.createElement ('div'),
             strokeInput = document.createElement ('input');
-        panel.appendChild (selectbox);
-        panel.appendChild (right);
-        right.appendChild (strokebox);
-        right.appendChild (buttons);
-        panel.setAttribute ('id', 'panel');
-        panel.setAttribute ('class', 'panel');
+        inputbox.appendChild (selectbox);
+        inputbox.appendChild (panel);
+        panel.appendChild (strokebox);
+        panel.appendChild (buttons);
+        inputbox.setAttribute ('id', 'inputbox');
+        inputbox.setAttribute ('class', 'inputbox');
         selectbox.innerHTML = 'selectbox';
         selectbox.setAttribute ('class', 'selectbox');
         strokebox.appendChild (strokeInput);
@@ -57,7 +57,7 @@
         }
         buttonsHTML += '</ul>';
         buttons.innerHTML = buttonsHTML;
-        document.body.appendChild (panel);
+        document.body.appendChild (inputbox);
     }
 
     /*
@@ -205,7 +205,7 @@
                     }
                     inputs[i].onblur = function () {
                         //panel.style.display = 'none';
-                        document.body.removeChild (panel);
+                        document.body.removeChild (inputbox);
                     }
                 }
             },
