@@ -60,6 +60,8 @@
           selectbox      panel
     */ 
     function strokePanel (element, instructionset) {
+        if (document.getElementById ('inputbox'))
+                 return;
         var inputbox = document.createElement ('div'),
             selectbox = document.createElement ('div'),
             panel = document.createElement ('div'),
