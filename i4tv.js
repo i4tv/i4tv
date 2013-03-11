@@ -27,10 +27,18 @@
     strokeEngine = new WebSocket('ws://www.i4tv.cn:8088/websocket/');
     strokeEngine.onmessage = function (evt) {
         var candidat = '';
-        for (i=0; i<evt.data.length; i++) {
-            candidat += '6' + i + '.' + evt.data[i] + ' ';
+        for (var i = 0; i < evt.data.length; i++) {
+            if (i < 10) {
+                candidat += '6 0 ' + i + '.' + evt.data[i] + ' ';
+                var opcode = '6 0 ' + i;
+                addOpcode (opcode, evt.data[i], strokePickOn);
+            } else if (i < 100) {
+                candidat += '6 ' + Math.floor(i / 10) + ' ' + (i % 10) + evt.data[i] + ' ';
+                var opcode = '6 ' + Math.floor(i / 10) + ' ' + (i % 10);
+                addOpcode (opcode, evt.data[i], strokePickOn);
+            }
         }
-        console.log (candidat);
+        document.getElementById ('selectbox').innerHTML = candidat;
     };
 
     /*
@@ -41,6 +49,11 @@
         strokebox.value += key;
         console.log (key);
         strokeEngine.send (strokebox.value);
+    }
+
+    function strokePickOn (word) {
+        var inputbox = document.activeElement;
+        inputbox.value += word;
     }
 
     /*
@@ -76,7 +89,7 @@
         panel.appendChild (buttons);
         inputbox.setAttribute ('id', 'inputbox');
         inputbox.setAttribute ('class', 'inputbox');
-        selectbox.innerHTML = 'selectbox';
+        selectbox.setAttribute ('id', 'selectbox');
         selectbox.setAttribute ('class', 'selectbox');
         strokeInput.setAttribute ('id', 'strokebox');
         strokebox.appendChild (strokeInput);
@@ -112,7 +125,6 @@
         select: select the hanzi.
     */
     function addOpcode (opcode, virtualkey, instruction) {
-
         currentIndex[opcode] = 0;
         keys = opcode.split(' ');
 
