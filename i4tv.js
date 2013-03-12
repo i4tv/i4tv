@@ -27,6 +27,9 @@
     strokeEngine = new WebSocket('ws://www.i4tv.cn:8088/websocket/');
     strokeEngine.onmessage = function (evt) {
         var candidat = '';
+        if (document.getElementById ('selectbox').innerHTML != '') {
+            delSelectOpcode ();
+        }
         for (var i = 0; i < evt.data.length; i++) {
             if (i < 10) {
                 candidat += '6 0 ' + i + '.' + evt.data[i] + ' ';
@@ -35,7 +38,6 @@
             } else if (i < 100) {
                 candidat += '6 ' + Math.floor(i / 10) + ' ' + (i % 10) + evt.data[i] + ' ';
                 var opcode = '6 ' + Math.floor(i / 10) + ' ' + (i % 10);
-console.log ('add opcode ' + opcode);
                 addOpcode (opcode, evt.data[i], strokePickOn);
             }
         }
@@ -52,12 +54,7 @@ console.log ('add opcode ' + opcode);
         strokeEngine.send (strokebox.value);
     }
 
-    /*
-        pick on the word, clear strokeinput and remove words from strokeinstructionset.
-    */
-    function strokePickOn (word) {
-        var inputbox = document.activeElement;
-        inputbox.value += word;
+    function delSelectOpcode () {
         for (var i = 600; i < 630; i++) {
             var opcodestr = i.toString (),
                 keys = opcodestr.split (''),
@@ -65,9 +62,19 @@ console.log ('add opcode ' + opcode);
             for (var j = 1; j < keys.length; j++) {
                 opcode = opcode + ' ' + keys[j];
             }
-console.log('delete' + opcode);
             delOpcode (opcode);
         }
+    }
+
+    /*
+        pick on the word, clear strokeinput and remove words from strokeinstructionset.
+    */
+    function strokePickOn (word) {
+        var inputbox = document.activeElement;
+        inputbox.value += word;
+        strokebox.value = '';
+        selectbox.innerHTML = '';
+        delSelectOpcode ();
     }
 
     /*
@@ -240,10 +247,11 @@ console.log('delete' + opcode);
             //console.log ('handle' + currentIndex[instructions[i].opcode] + ' : ' + instructions[i].length);
             if (currentIndex[instructions[i].opcode] == instructions[i].index) {
                 instructions[i].instruction (key);
-            }
-            if (currentOpcodeLength == instructions[i].length) {
-                reset ();
-                break;
+                if (currentOpcodeLength == instructions[i].length) {
+                    // match a opcode, reset
+                    reset ();
+                    break;
+                }
             }
         }
 
@@ -277,6 +285,8 @@ console.log('delete' + opcode);
                     }
                     inputs[i].onblur = function () {
                         document.body.removeChild (inputbox);
+                        instructionSet = {};
+                        currentIndex = {};
                     }
                 }
             },
