@@ -35,6 +35,7 @@
             } else if (i < 100) {
                 candidat += '6 ' + Math.floor(i / 10) + ' ' + (i % 10) + evt.data[i] + ' ';
                 var opcode = '6 ' + Math.floor(i / 10) + ' ' + (i % 10);
+console.log ('add opcode ' + opcode);
                 addOpcode (opcode, evt.data[i], strokePickOn);
             }
         }
@@ -51,9 +52,22 @@
         strokeEngine.send (strokebox.value);
     }
 
+    /*
+        pick on the word, clear strokeinput and remove words from strokeinstructionset.
+    */
     function strokePickOn (word) {
         var inputbox = document.activeElement;
         inputbox.value += word;
+        for (var i = 600; i < 630; i++) {
+            var opcodestr = i.toString (),
+                keys = opcodestr.split (''),
+                opcode = keys[0];
+            for (var j = 1; j < keys.length; j++) {
+                opcode = opcode + ' ' + keys[j];
+            }
+console.log('delete' + opcode);
+            delOpcode (opcode);
+        }
     }
 
     /*
@@ -138,8 +152,8 @@
                 instruction (virtualkey);
             };
 
-        for (i=0; i<keys.length; i++) {
-            key = keys[i];
+        for (var i = 0; i < keys.length; i++) {
+            var key = keys[i];
             if (!instructionSet[key]) {
                 instructionSet[key] = [];
             }
@@ -161,6 +175,20 @@
                 };
             }
             instructionSet[key].push (record);
+        }
+    }
+
+    function delOpcode (opcode) {
+        var keys = opcode.split (' ');
+
+        reset ();
+        for (var i = 0; i < keys.length; i++) {
+            var key = keys[i];
+            for (var j = 0; j < instructionSet[key].length; j++) {
+                if (instructionSet[key][j].opcode === opcode) {
+                    instructionSet[key].splice (j, 1);
+                }
+            }
         }
     }
 
@@ -210,7 +238,9 @@
         instructions = getMatchInstructions (key);
         for (i = 0; i < instructions.length; i++) {
             //console.log ('handle' + currentIndex[instructions[i].opcode] + ' : ' + instructions[i].length);
-            instructions[i].instruction (key);
+            if (currentIndex[instructions[i].opcode] == instructions[i].index) {
+                instructions[i].instruction (key);
+            }
             if (currentOpcodeLength == instructions[i].length) {
                 reset ();
                 break;
