@@ -10,18 +10,17 @@
         chinese stroke input method.
     */
     var strokeInstructionSet = {
-        "1": 'h',
-        "2": 's',
-        "3": 'p',
-        "4": 'n',
-        "5": 'z',
-        "0 1": 37, // left arrow
-        "0 2": 39, // right arrow
-        "0 3": 46, // delete
-        "0 4": 8, // backspace
-        "0 5": 9, // Tab, input method switch.
-        "0 6": 13, // Enter, ok, complete.
-        "0 7": 36 // home, Help
+        "1": ['h', '一'],
+        "2": ['s', '丨'],
+        "3": ['p', '丿'],
+        "4": ['n', '丶'],
+        "5": ['z', '乛'],
+        "0 1": [37, '←'],// left arrow
+        "0 2": [39, '→'], // right arrow
+        "0 3": [46, '删除'],// delete
+        "0 4": [9, '输入法'],// Tab, input method switch.
+        "0 5": [13, '完成'],// Enter, ok, complete.
+        "0 6": [36, '帮助'] // home, Help
     },
 
     strokeEngine = new WebSocket('ws://www.i4tv.cn:8088/websocket/');
@@ -117,7 +116,7 @@
         buttons.setAttribute ('class', 'buttons');
         buttonsHTML = '<ul>';
         for (var opcode in instructionset) {
-            buttonsHTML += '<li class="key">' + instructionset[opcode] + '<hr>' + opcode + '</li>'
+            buttonsHTML += '<li class="key">' + instructionset[opcode][1] + '<hr>' + opcode + '</li>'
         }
         buttonsHTML += '</ul>';
         buttons.innerHTML = buttonsHTML;
@@ -277,7 +276,7 @@
 
                         if (inputmethod === 'stroke') {
                             for (opcode in strokeInstructionSet) {
-                                addOpcode (opcode, strokeInstructionSet[opcode], strokeKeypress);
+                                addOpcode (opcode, strokeInstructionSet[opcode][0], strokeKeypress);
                             }
                         }
 
