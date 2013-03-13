@@ -48,9 +48,9 @@
     */
     function strokeKeypress (key) {
         var strokebox = document.getElementById ('strokebox');
-        strokebox.value += key;
+        strokebox.innerHTML += key;
         console.log (key);
-        strokeEngine.send (strokebox.value);
+        strokeEngine.send (strokebox.innerHTML);
     }
 
     function delSelectOpcode () {
@@ -77,42 +77,37 @@
     }
 
     /*
-        stroke inputbox.
-        +-----------+---------------+
-        |           |   strokebox   |
-        |           | +-----------+ |
-        |           | |strokeinput| |
-        |           | +-----------+ |
-        |           +---------------+
-        |           |               |
-        |           |               |
-        |           |    buttons    |
-        |           |               |
-        |           |               |
-        +-----------+---------------+
-          selectbox      panel
+        stroke panel.
+        +-----------+---------+
+        | strokebox |         |
+        |-----------|         |
+        |           |         |
+        |           | buttons |
+        | selectbox |         |
+        |           |         |
+        |           |         |
+        +-----------+---------+
+          inputbox           
     */ 
     function strokePanel (element, instructionset) {
         // prevent from add inputbox more than one.
-        if (document.getElementById ('inputbox'))
+        if (document.getElementById ('panel'))
                  return;
 
-        var inputbox = document.createElement ('div'),
-            selectbox = document.createElement ('div'),
-            panel = document.createElement ('div'),
+        var panel = document.createElement ('div'),
             strokebox = document.createElement ('div'),
-            buttons = document.createElement ('div'),
-            strokeInput = document.createElement ('input');
-        inputbox.appendChild (selectbox);
-        inputbox.appendChild (panel);
+            selectbox = document.createElement ('div'),
+            buttons = document.createElement ('div');
         panel.appendChild (strokebox);
+        panel.appendChild (selectbox);
         panel.appendChild (buttons);
-        inputbox.setAttribute ('id', 'inputbox');
-        inputbox.setAttribute ('class', 'inputbox');
+        panel.setAttribute ('id', 'panel');
+        panel.setAttribute ('class', 'panel');
+        strokebox.setAttribute ('id', 'strokebox');
+        strokebox.setAttribute ('class', 'strokebox');
         selectbox.setAttribute ('id', 'selectbox');
         selectbox.setAttribute ('class', 'selectbox');
-        strokeInput.setAttribute ('id', 'strokebox');
-        strokebox.appendChild (strokeInput);
+        buttons.setAttribute ('id', 'buttons');
         buttons.setAttribute ('class', 'buttons');
         buttonsHTML = '<ul>';
         for (var opcode in instructionset) {
@@ -120,7 +115,7 @@
         }
         buttonsHTML += '</ul>';
         buttons.innerHTML = buttonsHTML;
-        document.body.appendChild (inputbox);
+        document.body.appendChild (panel);
     }
 
     /*
@@ -283,9 +278,9 @@
                         strokePanel (inputs[i], strokeInstructionSet);
                     }
                     inputs[i].onblur = function () {
-                        document.body.removeChild (inputbox);
-                        instructionSet = {};
-                        currentIndex = {};
+                        //document.body.removeChild (panel);
+                        //instructionSet = {};
+                        //currentIndex = {};
                     }
                 }
             },
