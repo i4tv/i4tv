@@ -71,7 +71,7 @@
     function strokePickOn (word) {
         var inputbox = document.activeElement;
         inputbox.value += word;
-        strokebox.value = '';
+        strokebox.innerHTML = '';
         selectbox.innerHTML = '';
         delSelectOpcode ();
     }
@@ -278,9 +278,9 @@
                         strokePanel (inputs[i], strokeInstructionSet);
                     }
                     inputs[i].onblur = function () {
-                        //document.body.removeChild (panel);
-                        //instructionSet = {};
-                        //currentIndex = {};
+                        document.body.removeChild (panel);
+                        instructionSet = {};
+                        currentIndex = {};
                     }
                 }
             },
