@@ -126,6 +126,7 @@
         selectbox.setAttribute ('class', 'selectbox');
         buttons.setAttribute ('id', 'buttons');
         buttons.setAttribute ('class', 'buttons');
+        strokeKeySequence = '';
         buttonsHTML = '';
         for (var opcode in instructionset) {
             buttonsHTML += '<li class="key">' + instructionset[opcode][1] + '<hr>' + opcode + '</li>'
