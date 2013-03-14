@@ -1,5 +1,5 @@
 .panel {
-    background:	#c5c9cc;
+    background: #c5c9cc;
     padding: .3em;
     left: 2;
     top: 10;
@@ -25,17 +25,17 @@
     color: #ffffff;
     padding-top: 5px;
     height: 250px;
-    width: 320px;
+    width: 300px;
 }
 
 .buttons {
-    width: 320px;
+    background: #000000;
+    width: 300px;
 }
-
-li {float: left;}
 
 .key{
     display: block;
+    float: left;
     color: #aaa;
     font: bold 12pt arial;
     text-decoration: none;

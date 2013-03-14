@@ -13,8 +13,8 @@
         "1": ['h', '一'],
         "2": ['s', '丨'],
         "3": ['p', '丿'],
-        "4": ['n', '丶'],
-        "5": ['z', '乛'],
+        "4": ['n', '丶㇏'],
+        "5": ['z', '乛乙乚'],
         "0 1": [37, '←'],// left arrow
         "0 2": [39, '→'], // right arrow
         "0 3": [46, '删除'],// delete
@@ -22,7 +22,7 @@
         "0 5": [13, '完成'],// Enter, ok, complete.
         "0 6": [36, '帮助'] // home, Help
     },
-
+    strokeKeySequence = '',
     strokeEngine = new WebSocket('ws://www.i4tv.cn:8088/websocket/');
     strokeEngine.onmessage = function (evt) {
         var candidat = '';
@@ -48,9 +48,25 @@
     */
     function strokeKeypress (key) {
         var strokebox = document.getElementById ('strokebox');
-        strokebox.innerHTML += key;
-        console.log (key);
-        strokeEngine.send (strokebox.innerHTML);
+        strokeKeySequence += key;
+        switch(key) {
+        case 'h':
+            strokebox.innerHTML += '横';
+            break;
+        case 's':
+            strokebox.innerHTML += '竖';
+            break;
+        case 'p':
+            strokebox.innerHTML += '撇';
+            break;
+        case 'n':
+            strokebox.innerHTML += '捺';
+            break;
+        case 'z':
+            strokebox.innerHTML += '折';
+        }
+        //console.log (key);
+        strokeEngine.send (strokeKeySequence);
     }
 
     function delSelectOpcode () {
@@ -73,6 +89,7 @@
         inputbox.value += word;
         strokebox.innerHTML = '';
         selectbox.innerHTML = '';
+        strokeKeySequence = '';
         delSelectOpcode ();
     }
 
@@ -109,11 +126,11 @@
         selectbox.setAttribute ('class', 'selectbox');
         buttons.setAttribute ('id', 'buttons');
         buttons.setAttribute ('class', 'buttons');
-        buttonsHTML = '<ul>';
+        buttonsHTML = '';
         for (var opcode in instructionset) {
             buttonsHTML += '<li class="key">' + instructionset[opcode][1] + '<hr>' + opcode + '</li>'
         }
-        buttonsHTML += '</ul>';
+        buttonsHTML += '';
         buttons.innerHTML = buttonsHTML;
         document.body.appendChild (panel);
     }
