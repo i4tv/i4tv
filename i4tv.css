@@ -1,5 +1,5 @@
 .panel {
-    background:	#d5d9dc;
+    background:	#c5c9cc;
     padding: .3em;
     left: 2;
     top: 10;
@@ -13,14 +13,19 @@
 }
 
 .strokebox {
-    background:	#00f0f0;
-    height: 25px;
+    background:	#0000ff;
+    color: #ffffff;
+    height: 30px;
+    margin-bottom: 1px;
+    padding-top: 2px;
 }
 
 .selectbox {
-    background:	#f000f0;
+    background:	#0000ff;
+    color: #ffffff;
+    padding-top: 5px;
     height: 250px;
-    width: 300px;
+    width: 320px;
 }
 
 .buttons {
@@ -32,7 +37,7 @@ li {float: left;}
 .key{
     display: block;
     color: #aaa;
-    font: bold 10pt arial;
+    font: bold 12pt arial;
     text-decoration: none;
     text-align: center;
     width: 60px;
