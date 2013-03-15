@@ -1,5 +1,5 @@
 .panel {
-    background: #c5c9cc;
+    background: lightgray;
     padding: .3em;
     left: 2;
     top: 10;
@@ -13,25 +13,30 @@
 }
 
 .strokebox {
-    background:	#0000ff;
-    color: #ffffff;
+    font-family: SimHei;
+    font-weight:bold;
+    font-size: 18pt;
+    background:	azure;
+    color: #aaa;
     height: 30px;
     margin-bottom: 1px;
     padding-top: 2px;
-    font-size: 12pt;
 }
 
 .selectbox {
-    background:	#0000ff;
-    color: #ffffff;
+    font-family: SimHei;
+    font-weight:bold;
+    font-size: 18pt;
+    background:	azure;
+    color: #aaa;
     padding-top: 5px;
     height: 250px;
-    width: 300px;
+    width: 360px;
 }
 
 .buttons {
     background: #000000;
-    width: 300px;
+    width: 360px;
 }
 
 .key{
