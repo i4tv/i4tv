@@ -31,11 +31,11 @@
         }
         for (var i = 0; i < evt.data.length; i++) {
             if (i < 10) {
-                candidat += '6 0 ' + i + '.' + evt.data[i] + ' ';
+                candidat += '60' + i + '.' + evt.data[i] + ' ';
                 var opcode = '6 0 ' + i;
                 addOpcode (opcode, evt.data[i], strokePickOn);
             } else if (i < 100) {
-                candidat += '6 ' + Math.floor(i / 10) + ' ' + (i % 10) + evt.data[i] + ' ';
+                candidat += '6' + Math.floor(i / 10) + (i % 10) + '.' + evt.data[i] + ' ';
                 var opcode = '6 ' + Math.floor(i / 10) + ' ' + (i % 10);
                 addOpcode (opcode, evt.data[i], strokePickOn);
             }
@@ -95,16 +95,17 @@
 
     /*
         stroke panel.
-        +-----------+---------+
-        | strokebox |         |
-        |-----------|         |
-        |           |         |
-        |           | buttons |
-        | selectbox |         |
-        |           |         |
-        |           |         |
-        +-----------+---------+
-          inputbox           
+        +-----------+
+        | strokebox |
+        |-----------|
+        |           |
+        | selectbox |
+        |           |
+        |-----------|
+        |           |
+        |  buttons  |
+        |           |
+        +-----------+
     */ 
     function strokePanel (element, instructionset) {
         // prevent from add inputbox more than one.
