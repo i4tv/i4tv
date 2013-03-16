@@ -10,17 +10,15 @@
         chinese stroke input method.
     */
     var strokeInstructionSet = {
-        "1": ['h', '一'],
-        "2": ['s', '丨'],
+        "1": ['h', '一㇀'],
+        "2": ['s', '丨亅'],
         "3": ['p', '丿'],
         "4": ['n', '丶㇏'],
         "5": ['z', '乛乙乚'],
-        "0 1": [37, '←'],// left arrow
-        "0 2": [39, '→'], // right arrow
-        "0 3": [46, '删除'],// delete
-        "0 4": [9, '输入法'],// Tab, input method switch.
-        "0 5": [13, '完成'],// Enter, ok, complete.
-        "0 6": [36, '帮助'] // home, Help
+        "0 1": [46, '清除笔画'],// delete
+        "0 2": [9, '切换输入法'],// Tab, input method switch.
+        "0 3": [13, '完成'],// Enter, ok, complete.
+        "0 4": [36, '帮助'] // home, Help
     },
     strokeKeySequence = '',
     strokeEngine = new WebSocket('ws://www.i4tv.cn:8088/websocket/');
@@ -223,7 +221,7 @@
 
     function resetTimer () {
         clearTimeout (timerReset);
-        timerReset = setTimeout (reset, 1000);
+        timerReset = setTimeout (reset, 3000);
     }
 
     /*
