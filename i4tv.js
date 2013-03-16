@@ -62,6 +62,13 @@
             break;
         case 'z':
             strokebox.innerHTML += '折';
+            break;
+        case 46:
+            strokebox.innerHTML = '';
+            selectbox.innerHTML = '';
+            strokeKeySequence = '';
+            delSelectOpcode ();
+            return;
         }
         //console.log (key);
         strokeEngine.send (strokeKeySequence);
