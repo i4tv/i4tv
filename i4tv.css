@@ -1,14 +1,9 @@
 .panel {
-    background: lightgray;
+    background: #663300;
     padding: .3em;
     left: 2;
     top: 10;
     z-index: 16000;
-    -webkit-box-shadow:
-        inset 0 0 25px #e8e8e8,
-        0 1px 0 #c3c3c3,
-        0 2px 0 #c9c9c9,
-        0 2px 3px #333;
     display: table;
 }
 
@@ -17,7 +12,7 @@
     font-weight:bold;
     font-size: 18pt;
     background:	azure;
-    color: #aaa;
+    color: #ff9900;
     height: 30px;
     margin-bottom: 1px;
     padding-top: 2px;
@@ -28,7 +23,7 @@
     font-weight:bold;
     font-size: 18pt;
     background:	azure;
-    color: #aaa;
+    color: #ff9900;
     padding-top: 5px;
     height: 250px;
     width: 500px;
@@ -42,7 +37,7 @@
 .key{
     display: block;
     float: left;
-    color: #aaa;
+    color: #ff9900;
     font: bold 12pt arial;
     text-decoration: none;
     text-align: center;
