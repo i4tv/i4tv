@@ -17,7 +17,7 @@
         "5": ['z', '乛乙乚'],
         "0 1": [46, '清除笔画'],// delete
         "0 2": [9, '切换输入法'],// Tab, input method switch.
-        "0 3": [13, '完成'],// Enter, ok, complete.
+        "0 3": [13, '完成'],// Enter, ok, complete, close panel.
         "0 4": [36, '帮助'] // home, Help
     },
     strokeKeySequence = '',
@@ -69,6 +69,9 @@
             strokeKeySequence = '';
             delSelectOpcode ();
             return;
+        case 13:
+            closePanel ();
+            break;
         }
         //console.log (key);
         strokeEngine.send (strokeKeySequence);
@@ -142,6 +145,12 @@
         document.body.appendChild (panel);
     }
 
+    function closePanel () {
+        document.body.removeChild (panel);
+        instructionSet = {};
+        currentIndex = {};
+    }
+
     /*
         instruction set, i4TV
         key: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
@@ -209,6 +218,9 @@
         reset ();
         for (var i = 0; i < keys.length; i++) {
             var key = keys[i];
+            if (instructionSet[key] == undefined) {
+                continue;
+            }
             for (var j = 0; j < instructionSet[key].length; j++) {
                 if (instructionSet[key][j].opcode === opcode) {
                     instructionSet[key].splice (j, 1);
@@ -302,9 +314,7 @@
                         strokePanel (inputs[i], strokeInstructionSet);
                     }
                     inputs[i].onblur = function () {
-                        document.body.removeChild (panel);
-                        instructionSet = {};
-                        currentIndex = {};
+                        closePanel ();
                     }
                 }
             },
