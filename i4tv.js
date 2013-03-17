@@ -94,13 +94,9 @@
         +-----------+
         | strokebox |
         |-----------|
-        |           |
         | selectbox |
-        |           |
         |-----------|
-        |           |
         |  buttons  |
-        |           |
         +-----------+
     */ 
     function strokePanel (element, instructionset) {
