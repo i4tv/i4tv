@@ -1,5 +1,5 @@
 .panel {
-    background: #663300;
+    background: gray;
     padding: .3em;
     left: 2;
     top: 10;
@@ -11,8 +11,8 @@
     font-family: SimHei;
     font-weight:bold;
     font-size: 18pt;
-    background:	azure;
-    color: #ff9900;
+    background:	white;
+    color: black;
     height: 30px;
     margin-bottom: 1px;
     padding-top: 2px;
@@ -22,8 +22,8 @@
     font-family: SimHei;
     font-weight:bold;
     font-size: 18pt;
-    background:	azure;
-    color: #ff9900;
+    background:	white;
+    color: black;
     padding-top: 5px;
     height: 250px;
     width: 500px;
@@ -37,7 +37,7 @@
 .key{
     display: block;
     float: left;
-    color: #ff9900;
+    color: black;
     font: bold 12pt arial;
     text-decoration: none;
     text-align: center;
