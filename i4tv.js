@@ -77,18 +77,6 @@
         strokeEngine.send (strokeKeySequence);
     }
 
-    function delSelectOpcode () {
-        for (var i = 600; i < 630; i++) {
-            var opcodestr = i.toString (),
-                keys = opcodestr.split (''),
-                opcode = keys[0];
-            for (var j = 1; j < keys.length; j++) {
-                opcode = opcode + ' ' + keys[j];
-            }
-            delOpcode (opcode);
-        }
-    }
-
     /*
         pick on the word, clear strokeinput and remove words from strokeinstructionset.
     */
@@ -145,6 +133,21 @@
         document.body.appendChild (panel);
     }
 
+    /*
+        remove opcode from instruction set.
+    */
+    function delSelectOpcode () {
+        for (var i = 600; i < 630; i++) {
+            var opcodestr = i.toString (),
+                keys = opcodestr.split (''),
+                opcode = keys[0];
+            for (var j = 1; j < keys.length; j++) {
+                opcode = opcode + ' ' + keys[j];
+            }
+            delOpcode (opcode);
+        }
+    }
+
     function closePanel () {
         document.body.removeChild (panel);
         instructionSet = {};
@@ -160,11 +163,8 @@
         instruction: corresponding action.
     */
     var instructionSet = {},
-
         currentIndex = {},
-
         currentOpcodeLength = 0,
-
         timerReset;
 
     /*
@@ -291,11 +291,9 @@
     window.addEventListener ('keypress', keyHandle);
 
     var i4TV = function (className) {
-
         return {
             chineseInput: function (inputmethod) {
-
-                inputs = document.getElementsByClassName (className);
+                var inputs = document.getElementsByClassName (className);
 
                 // bind event.
                 for (i = 0; i < inputs.length; i++) {
@@ -304,7 +302,6 @@
                         initialization of instruction table take instruction panel as para.
                     */
                     inputs[i].onfocus = function () {
-
                         if (inputmethod === 'stroke') {
                             for (opcode in strokeInstructionSet) {
                                 addOpcode (opcode, strokeInstructionSet[opcode][0], strokeKeypress);
