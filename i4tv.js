@@ -144,6 +144,15 @@
         }
     }
 
+    function initPanel (element, type) {
+        if (type === 'stroke') {
+            for (opcode in strokeInstructionSet) {
+                addOpcode (opcode, strokeInstructionSet[opcode][0], strokeKeypress);
+            }
+            strokePanel (element, strokeInstructionSet);
+        }
+    }
+
     function closePanel () {
         document.body.removeChild (panel);
         instructionSet = {};
@@ -299,13 +308,10 @@
                     */
                     inputs[i].onfocus = function () {
                         if (inputmethod === 'stroke') {
-                            for (opcode in strokeInstructionSet) {
-                                addOpcode (opcode, strokeInstructionSet[opcode][0], strokeKeypress);
-                            }
+                            initPanel (inputs[i], 'stroke');
                         }
-
-                        strokePanel (inputs[i], strokeInstructionSet);
                     }
+
                     inputs[i].onblur = function () {
                         closePanel ();
                     }
