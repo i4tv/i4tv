@@ -129,6 +129,15 @@
         document.body.appendChild (panel);
     }
 
+    function initPanel (element, type) {
+        if (type === 'stroke') {
+            for (opcode in strokeInstructionSet) {
+                addOpcode (opcode, strokeInstructionSet[opcode][0], strokeKeypress);
+            }
+            strokePanel (element, strokeInstructionSet);
+        }
+    }
+
     /*
         remove opcode from instruction set.
     */
@@ -141,15 +150,6 @@
                 opcode = opcode + ' ' + keys[j];
             }
             delOpcode (opcode);
-        }
-    }
-
-    function initPanel (element, type) {
-        if (type === 'stroke') {
-            for (opcode in strokeInstructionSet) {
-                addOpcode (opcode, strokeInstructionSet[opcode][0], strokeKeypress);
-            }
-            strokePanel (element, strokeInstructionSet);
         }
     }
 
