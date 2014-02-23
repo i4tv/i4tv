@@ -35,7 +35,7 @@ class PinyinEngine(tornado.websocket.WebSocketHandler):
         print "WebSocket opened"
 
     def on_message(self, message):
-        client = redis.Redis(host='localhost', port=6379, db=2)
+        client = redis.Redis(host='localhost', port=6379, db=9)
         print "client message %s" % message
         s = client.zrevrange(message, 0, 29)
         a = u""
